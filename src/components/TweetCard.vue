@@ -1,5 +1,9 @@
 <template>
-  <li class="card mb-3 p-3">
+  <li
+    class="card mb-3 p-3"
+    v-for="(item, index) in cardData"
+    :key="index"
+  >
     <div class="row g-0">
       <div class="col-5 col-sm-4 text-center">
         <a href="#" class="stretched-link">
@@ -15,7 +19,7 @@
         <div class="card-body">
           <h2 class="card-title h5 m-0">User Name</h2>
           <p class="card-text text-gray my-3">
-            大家安安！謝謝每位贊助者的熱情支持，讓我們離夢想更進一步，我們將於下個月舉辦體驗會，歡迎各位踴躍參與！
+            {{ item.text }}
           </p>
           <p class="card-text m-0">
             <small class="d-block text-muted">2022/05/12 20:15 </small>
@@ -29,6 +33,24 @@
 
 <script>
 export default {
-  name: 'TwitterCard',
+  name: 'TweetCard',
+  props: {
+    searchRecentData: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
+  watch: {
+    searchRecentData() {
+      this.cardData = this.searchRecentData;
+    },
+  },
+  data() {
+    return {
+      cardData: {},
+    };
+  },
 };
 </script>
