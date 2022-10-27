@@ -4,10 +4,14 @@ import axios from 'axios';
 export default createStore({
   strict: true,
   state: {
+    isLoading: false,
     searchRecentData: [],
   },
   mutations: {
     // state, status/payload
+    LOADING(state, payload) {
+      state.isLoading = payload;
+    },
     GET_SEARCH_RECENT_DATA(state, payload) {
       if (payload) {
         state.searchRecentData = payload;
@@ -17,7 +21,11 @@ export default createStore({
   actions: {
     // 非同步行為
     // context, status/payload
+    updateLoading(context, payload) {
+      context.commit('LOADING', payload);
+    },
     getSearchRecentData(context, payload) {
+      context.commit('LOADING', true);
       const promise = new Promise((resolve) => {
         // (1) 搜尋文章
         axios.get('/api/tweets/search/recent', {
@@ -58,6 +66,7 @@ export default createStore({
             }).then((resAuthor) => {
               allData[index].username = resAuthor.data.data.username;
               allData[index].profile_image_url = resAuthor.data.data.profile_image_url;
+              context.commit('LOADING', false);
             }).catch((error) => {
               console.log(error);
             }),

@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading" />
   <div class="p-3">
     <div class="container-fluid">
       <div class="row">
@@ -17,6 +18,11 @@ export default {
   components: {
     TwitterSearchBox,
     TwitterResultList,
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    },
   },
 };
 </script>
