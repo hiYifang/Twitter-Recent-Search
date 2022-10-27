@@ -21,17 +21,22 @@ export default createStore({
   actions: {
     // 非同步行為
     // context, status/payload
-    updateLoading(context, payload) {
-      context.commit('LOADING', payload);
-    },
     getSearchRecentData(context, payload) {
+      const params = {
+        query: payload,
+        next_token: '',
+      };
+      if (!params.next_token) {
+        delete params.next_token;
+      }
       context.commit('LOADING', true);
       const promise = new Promise((resolve) => {
         // (1) 搜尋文章
         axios.get('/api/tweets/search/recent', {
-          params: { query: payload },
+          params,
           headers: { Authorization: `Bearer ${process.env.VUE_APP_TOKEN}` },
         }).then((resSearch) => {
+          params.next_token = resSearch.data.meta.next_token;
           resolve(resSearch.data.data);
         }).catch((err) => {
           console.log(err);

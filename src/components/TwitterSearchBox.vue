@@ -4,8 +4,8 @@
       class="form-control mb-3"
       type="text"
       placeholder="Search Keywords"
-      v-model.trim="keywords"
-      @keyup.enter="search"
+      v-model.trim="query"
+      @keyup.enter="searchKeyword"
     />
     <button type="button" class="btn btn-dark w-100" @click="searchKeyword">
       Search
@@ -18,13 +18,13 @@ export default {
   name: 'TwitterSearchBox',
   data() {
     return {
-      keywords: '台灣',
+      query: '台灣',
     };
   },
   methods: {
     searchKeyword() {
-      if (!this.keywords) return;
-      this.$store.dispatch('getSearchRecentData', this.keywords);
+      if (!this.query) return;
+      this.$store.dispatch('getSearchRecentData', this.query); // 操作 actions，後面可以帶參數
     },
   },
 };

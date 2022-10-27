@@ -2,7 +2,7 @@
   <li
     class="card mb-3 p-3"
     v-for="item in cardData"
-    :key="item.author_id"
+    :key="item.id"
   >
     <div class="row g-0">
       <div class="col-5 col-sm-4">
